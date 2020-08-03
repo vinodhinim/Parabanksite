@@ -1,0 +1,31 @@
+
+package com.maveric.core.cucumber.reporter.pojo;
+
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+@JsonAutoDetect
+@Getter
+@Setter
+public class After {
+
+    @JsonProperty("result")
+    public Result result;
+    @JsonProperty("match")
+    public Match match;
+    @JsonProperty("embeddings")
+    public List<Embedding> embeddings = new ArrayList<Embedding>();
+    @JsonProperty("output")
+    public List<String> output = new ArrayList<>();
+	public Collection<? extends String> getOutput() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite thread-count="20" guice-stage="DEVELOPMENT" name="Failed suite [Test Suite]" parallel="classes">
+  <test thread-count="20" name="Parallel scenario(failed)" parallel="classes">
+    <classes>
+      <class name="com.multibrowser.parabankbrowser2">
+        <methods>
+          <include name="getResult"/>
+          <include name="beforeClass"/>
+          <include name="registration"/>
+          <include name="afterClass"/>
+          <include name="startReport"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.multibrowser.parabankbrowser2 -->
+    </classes>
+  </test> <!-- Parallel scenario(failed) -->
+</suite> <!-- Failed suite [Test Suite] -->
