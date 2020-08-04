@@ -7,9 +7,10 @@
         <methods>
           <include name="getResult"/>
           <include name="beforeClass"/>
+          <include name="registration"/>
+          <include name="afterClass"/>
           <include name="startReport"/>
           <include name="tearDown"/>
-          <include name="Billpay"/>
         </methods>
       </class> <!-- com.multibrowser.parabankbrowser2 -->
     </classes>
