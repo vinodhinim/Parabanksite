@@ -35,7 +35,7 @@ public class ReportListener implements ITestListener, ISuiteListener, IInvokedMe
         logger.info("reports folder created successfully :" + reportFolder);
         screenShotsFolder.mkdirs();
         screenshotFolder = reportsFolder + "/screenshots";
-        CustomReporter.createCustomReport(reportFolder + "/CustomReport.html");
+        //CustomReporter.createCustomReport(reportFolder + "/CustomReport.html");
         try {
             FileUtils.copyFile(new File("./lib/MavericLogo.png"), new File(screenshotFolder + "/MavericLogo.png"));
             FileUtils.copyFile(new File("./lib/Background.png"), new File(screenshotFolder + "/Background.png"));

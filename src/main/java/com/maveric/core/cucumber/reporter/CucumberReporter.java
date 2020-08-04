@@ -4,8 +4,6 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maveric.core.cucumber.reporter.pojo.*;
-import com.maveric.core.testng.reporter.CustomReporter;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class CucumberReporter {
 
-    private static final String SEPARATOR = System.getProperty("file.separator");
+  /*  private static final String SEPARATOR = System.getProperty("file.separator");
     public static String testCaseName = "";
     public static String lineSeparator = System.getProperty("line.separator");
     public static int totalFeatures = 0;
@@ -105,7 +103,7 @@ public class CucumberReporter {
 
                                     testStatus = false;
                                     featureStatus = false;
-                                    String error = ((Object) step.getResult()).getErrorMessage();
+                                 String error = null;
                                     stepLogs.add(error);
                                     if (afterOutput.size() > 0) {
                                         stepLogs.add(String.join("", afterOutput));
@@ -150,7 +148,7 @@ public class CucumberReporter {
         }
 
     }
-
+*/
 
 }
 

@@ -7,6 +7,8 @@ import java.util.Dictionary;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
@@ -30,8 +32,12 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.multibrowser.Fillomethods;
 
+//@Listeners({TestListener.class, ReportListener.class, DriverListener.class, RestListener.class})
 public class parabankbrowser2 {
+	
+	private static final Logger logger = LogManager.getLogger();
 	
 	public WebDriver Driver;
 	
@@ -54,13 +60,14 @@ public class parabankbrowser2 {
     public void beforeClass() throws IOException {
     	System.setProperty("webdriver.gecko.driver", "C:\\Users\\vinodhinima\\eclipse-workspace\\Demomaven\\src\\test\\resources\\geckodriver.exe");
         Driver = new FirefoxDriver();
-        
+        logger.info("Driver initialisation paralelly");
         
     }
     
     @AfterClass
     public void afterClass() {
         Driver.quit();
+        logger.info("Quit Driver");
     }
 
    
@@ -196,6 +203,7 @@ public class parabankbrowser2 {
             Assert.assertTrue(true);
          	
         	 Reporter.log("TestNG_ReportsAndLogs -> Registration", true);	
+        	 logger.info("Registration");
         	
     }
     
