@@ -10,10 +10,14 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import com.maveric.core.driver.DriverFactory;
 
 public class seleniumcommo_methods  {
 	
 	parabankbrowser2 PBM = new parabankbrowser2();
+	public static WebDriver Driver;
 	
 	public void WebEdit(String xpath, String val) {
 		PBM.Driver.findElement(By.xpath(xpath)).click();
@@ -21,7 +25,7 @@ public class seleniumcommo_methods  {
 		
 	}
 	
-   /* public static void WindowHandlerWindows() {
+   public static void WindowHandlerWindows() {
 		String MainWindow = Driver.getWindowHandle();		
 		
         // To handle all new opened window.				
@@ -73,7 +77,6 @@ public static void  getAlerts3() throws InterruptedException {
 	simpleAlert.accept();
 	;
 }
-	
 
 public static void getAlerts4() throws InterruptedException {
 	Thread.sleep(3000);
@@ -83,6 +86,29 @@ public static void getAlerts4() throws InterruptedException {
 	Driver.switchTo().alert().sendKeys("Vino");
 	simpleAlert.accept();
 
-}*/
+}
+public static WebElement findElement(By by) {
+	try {
+		WebDriver Driver = DriverFactory.getFirefoxDriver();
+		return Driver.findElement(by);
+	} catch (Exception E) {
+		//ExReporter.log(LogStatus.ERROR, "Element not located in the page :" + E.getMessage());
+		return null;
+	}
+}
+
+public static void dropdown(By by, String keysToSend) {
+	try {
+
+	WebElement t = findElement(by);
+	Select sel= new Select(t);
+	sel.selectByVisibleText(keysToSend);
+	Thread.sleep(1500);
+	//ExReporter.log(LogStatus.PASS, "Text is entered successfully :" + keysToSend);
+	} catch (Exception E) {
+	//ExReporter.log(LogStatus.FAIL, "Text not entered successfully");
+	}
+	}
+
 
 }

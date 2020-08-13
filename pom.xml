@@ -129,12 +129,7 @@
             <groupId>com.jcraft</groupId>
             <artifactId>jsch</artifactId>
             <version>0.1.55</version>
-        </dependency>
-        <!--        <dependency>-->
-        <!--            <groupId>com.oracle.jdbc</groupId>-->
-        <!--            <artifactId>ojdbc8</artifactId>-->
-        <!--            <version>19.3.0.0</version>-->
-        <!--        </dependency>-->
+        </dependency> 
         <!--        <dependency>-->
         <!--            <groupId>mysql</groupId>-->
         <!--            <artifactId>mysql-connector-java</artifactId>-->
@@ -150,26 +145,21 @@
         <!--            <artifactId>db2jcc</artifactId>-->
         <!--            <version>db2jcc4</version>-->
         <!--        </dependency>-->
-
-
-        <dependency>
+<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
             <version>2.11.0</version>
-        </dependency>
-
-        <dependency>
+</dependency>
+<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.11.0</version>
         </dependency>
-
-        <dependency>
+<dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.11.0</version>
         </dependency>
-        
         <!-- https://mvnrepository.com/artifact/com.codoid.products/fillo -->
 <dependency>
   <groupId>com.codoid.products</groupId>
@@ -181,6 +171,11 @@
      <groupId>com.aventstack</groupId>
      <artifactId>extentreports</artifactId>
      <version>3.1.5</version>
+</dependency>
+<dependency>
+    <groupId>mysql</groupId>
+    <artifactId>mysql-connector-java</artifactId>
+    <version>8.0.21</version>
 </dependency>
     </dependencies>
     <build>

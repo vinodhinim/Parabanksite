@@ -6,9 +6,10 @@
       <class name="com.multibrowser.parabankbrowser2">
         <methods>
           <include name="getResult"/>
-          <include name="beforeClass"/>
-          <include name="registration"/>
-          <include name="afterClass"/>
+          <include name="LoanRequest"/>
+          <include name="Registration"/>
+          <include name="Driverlaunch"/>
+          <include name="BillPayment"/>
           <include name="startReport"/>
           <include name="tearDown"/>
         </methods>

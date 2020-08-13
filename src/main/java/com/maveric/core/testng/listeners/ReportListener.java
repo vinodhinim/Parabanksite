@@ -98,9 +98,9 @@ public class ReportListener implements ITestListener, ISuiteListener, IInvokedMe
             CustomReporter.updateValues(passedCount, failedCount, endDate, executionTime, includedGroups + "\n" + excludedGroups);
         } else {
 
-            CucumberReporter.generateCucumberReport();
-            CustomReporter.updateValues(CucumberReporter.passedFeatures,
-                    CucumberReporter.totalFeatures - CucumberReporter.passedFeatures, endDate, executionTime, CucumberReporter.featureTags);
+           // CucumberReporter.generateCucumberReport();
+            //CustomReporter.updateValues(CucumberReporter.passedFeatures,
+              //      CucumberReporter.totalFeatures - CucumberReporter.passedFeatures, endDate, executionTime, CucumberReporter.featureTags);
 
         }
     }

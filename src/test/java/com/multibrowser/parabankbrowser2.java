@@ -12,8 +12,11 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.By.ById;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.SendKeysAction;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -32,6 +35,7 @@ import com.aventstack.extentreports.markuputils.MarkupHelper;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
+import com.maveric.core.utils.data.Database;
 import com.multibrowser.Fillomethods;
 
 //@Listeners({TestListener.class, ReportListener.class, DriverListener.class, RestListener.class})
@@ -48,8 +52,10 @@ public class parabankbrowser2 {
     //helps to generate the logs in test report.
     ExtentTest test;
 	
-	 Fillomethods FM = new Fillomethods();
+	 //Fillomethods FM = new Fillomethods();
+    
 	 Properties obj = new Properties();					
+   Database DB = new Database("mysql", "root", "MySQL@12345", "localhost", "3306", "parabank");
    
      
 	 //seleniumcommo_methods SCM = new seleniumcommo_methods();
@@ -57,18 +63,18 @@ public class parabankbrowser2 {
 	
 	
     @BeforeClass
-    public void beforeClass() throws IOException {
+    public void Driverlaunch() throws IOException {
     	System.setProperty("webdriver.gecko.driver", "C:\\Users\\vinodhinima\\eclipse-workspace\\Demomaven\\src\\test\\resources\\geckodriver.exe");
         Driver = new FirefoxDriver();
         logger.info("Driver initialisation paralelly");
         
     }
     
-    @AfterClass
+  /*  @AfterClass
     public void afterClass() {
         Driver.quit();
         logger.info("Quit Driver");
-    }
+    }*/
 
    
     @BeforeTest
@@ -101,8 +107,8 @@ public class parabankbrowser2 {
 	}
     
     
-    @Test
-    public void registration() throws IOException {
+   @Test
+    public void Registration() throws IOException {
     	
     	FileInputStream objfile = new FileInputStream(System.getProperty("user.dir")+"\\application.properties");	
     	obj.load(objfile);
@@ -111,148 +117,150 @@ public class parabankbrowser2 {
     	
 
         Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        String url = FM.getdata("URL");
+        String url = "https://parabank.parasoft.com/parabank/register.htm";
         Driver.get(url);
         
         Driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         
         
         // Using Property file and Filo methods
-      Driver.findElement(By.id(obj.getProperty("Firstname"))).sendKeys(FM.getdata("Firstname"));	
+      Driver.findElement(By.id(obj.getProperty("Firstname"))).sendKeys(DB.readValue("SELECT * from login;" , "Firstname", 6));	
         
-       // WebEdit("//input[@id='customer.firstName']",FM.getdata("Firstname"));
-        
-     WebEdit("//input[@id='customer.lastName']",FM.getdata("Lastname"));
-        WebEdit("//input[@id='customer.address.street']",FM.getdata("Address"));
-        Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-       WebEdit("//input[@id='customer.address.city']",FM.getdata("City"));
-       WebEdit("//input[@id='customer.address.state']",FM.getdata("State"));
-       WebEdit("//input[@id='customer.address.zipCode']",FM.getdata("Zipcode"));
-       WebEdit("//input[@id='customer.phoneNumber']",FM.getdata("PhoneNumber"));
-        WebEdit("//input[@id='customer.ssn']",FM.getdata("Ssn"));
-        WebEdit("//input[@id='customer.username']",FM.getdata("Username"));
-        WebEdit("//input[@id='customer.password']",FM.getdata("Password"));
-        Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        WebEdit("//input[@id='repeatedPassword']",FM.getdata("RepeatePassword"));
-        	Driver.findElement(By.xpath(obj.getProperty("Button"))).click();
-        	 Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	//String errtext = null;
-        	
-        	//if(errtext.equals("This username already exists")) {
-        		
-        	//}
-        	 Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	 
-        	 
-        	 						/* Login Page*/	 
-        	/*Driver.findElement(By.xpath(obj.getProperty("LoginUsername"))).sendKeys(FM.getdata("LoginUsername"));
-        	Driver.findElement(By.xpath(obj.getProperty("LoginPassword"))).sendKeys(FM.getdata("LoginPassword"));
-        	Driver.findElement(By.xpath(obj.getProperty("LoginButton"))).click();*/
-        	
-        	 Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
-        	 
-        	 /*Bill Pay*/
-        	 
-        	 test = extent.createTest("Bill Payment", "PASSED test case");
-             Assert.assertTrue(true);
-             
-         	Driver.findElement(By.xpath(obj.getProperty("BillPay"))).click();
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeName"))).sendKeys(FM.getdata("PayeeName"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeAddress"))).sendKeys(FM.getdata("PayeeAddress"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeCity"))).sendKeys(FM.getdata("PayeeCity"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeState"))).sendKeys(FM.getdata("PayeeState"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeZipcode"))).sendKeys(FM.getdata("PayeeZipcode"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeePhone"))).sendKeys(FM.getdata("PayeePhone"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeAccount"))).sendKeys(FM.getdata("PayeeAccount"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeVeriAccount"))).sendKeys(FM.getdata("PayeeVeriAccount"));
-         	Driver.findElement(By.xpath(obj.getProperty("PayeeAmount"))).sendKeys(FM.getdata("PayeeAmount"));
-         	//Driver.findElement(By.xpath(obj.getProperty("PayeeFromAccount"))).sendKeys(FM.getdata("PayeeFromAccount"));"
-         	Driver.findElement(By.xpath(obj.getProperty("BillpayButton"))).click();
-         	
-         	Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
-         	
-         	/*Update contact Info
-         	Driver.findElement(By.xpath(obj.getProperty("UpdateContactInfo"))).click();
-        	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-         	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).click();
-        	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).clear();
-        	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).sendKeys(FM.getdata("UpdatePhoneNumber"));
-        	Driver.findElement(By.xpath(obj.getProperty("UpdateProfileButton"))).click();*/
-        	
-        	Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
-        	
-        	/*Request Loan*/
-        	Driver.findElement(By.xpath(obj.getProperty("RequestLoan"))).click();
-        	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	Driver.findElement(By.id(obj.getProperty("LoanAmount"))).sendKeys(FM.getdata("LoanAmount"));
-        	Driver.findElement(By.id(obj.getProperty("DownPaymentamount"))).sendKeys(FM.getdata("DownPaymentamount"));
-        	Driver.findElement(By.id(obj.getProperty("FromAccountID"))).sendKeys(FM.getdata("FromAccountID"));
-        	Driver.findElement(By.xpath(obj.getProperty("LoanApplyButton"))).click();
-        	
-        	test = extent.createTest("Request Loan", "PASSED test case");
-            Assert.assertTrue(true);
-        	
-        	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	/*Logout*/
-           	Driver.findElement(By.xpath(obj.getProperty("Logout"))).click();
-        	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        	
-         	
-        	test = extent.createTest("Logout", "PASSED test case");
-            Assert.assertTrue(true);
-         	
-        	 Reporter.log("TestNG_ReportsAndLogs -> Registration", true);	
-        	 logger.info("Registration");
-        	
+   // WebEdit("//input[@id='customer.firstName']",FM.getdata("Firstname"));
+      
+      Driver.findElement(By.id(obj.getProperty("Lastname"))).sendKeys(DB.readValue("SELECT * from login;" , "Lastname", 6));
+         Driver.findElement(By.id(obj.getProperty("Address"))).sendKeys(DB.readValue("SELECT * from login;" , "Address", 6));
+          Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        Driver.findElement(By.id(obj.getProperty("City"))).sendKeys(DB.readValue("SELECT * from login;" , "City", 6));
+       Driver.findElement(By.id(obj.getProperty("State"))).sendKeys(DB.readValue("SELECT * from login;" , "State", 6));
+        Driver.findElement(By.id(obj.getProperty("Zipcode"))).sendKeys(DB.readValue("SELECT * from login;" , "Zipcode", 6));
+       Driver.findElement(By.id(obj.getProperty("PhoneNumber"))).sendKeys(DB.readValue("SELECT * from login;" , "PhoneNumber", 6));
+       Driver.findElement(By.id(obj.getProperty("Ssn"))).sendKeys(DB.readValue("SELECT * from login;" , "Ssn", 6));
+       Driver.findElement(By.id(obj.getProperty("Username"))).sendKeys(DB.readValue("SELECT * from login;" , "Username", 6));
+       Driver.findElement(By.id(obj.getProperty("Password"))).sendKeys(DB.readValue("SELECT * from login;" , "Password", 6));          
+       Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+       
+       Driver.findElement(By.id(obj.getProperty("RepeatePassword"))).sendKeys(DB.readValue("SELECT * from login;" , "RepeatePassword", 6));          	
+       Driver.findElement(By.xpath(obj.getProperty("Button"))).click();
+          	 Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+          	
+          	//String errtext = null;
+          	
+          	//if(errtext.equals("This username already exists")) {
+          		
+          	//}
+          	 Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+          	 
+          	 
+          	 						/* Login Page*/	 
+          	/*Driver.findElement(By.xpath(obj.getProperty("LoginUsername"))).sendKeys(FM.getdata("LoginUsername"));
+          	Driver.findElement(By.xpath(obj.getProperty("LoginPassword"))).sendKeys(FM.getdata("LoginPassword"));
+          	Driver.findElement(By.xpath(obj.getProperty("LoginButton"))).click();*/
+          	
+          	 //Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+          	 
+          	 /*Bill Pay*/
+    }
+    
+   @Test
+    public void BillPayment() throws IOException {
+	   
+	   FileInputStream objfile = new FileInputStream(System.getProperty("user.dir")+"\\application.properties");	
+   	obj.load(objfile);
+    	
+          	 test = extent.createTest("Bill Payment", "PASSED test case");
+               Assert.assertTrue(true);
+               Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+               WebElement myDynamicElement = 
+             			(new WebDriverWait(Driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.xpath(obj.getProperty("BillPay"))));
+           	Driver.findElement(By.xpath(obj.getProperty("BillPay"))).click();
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeName"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeName", 1));
+          Driver.findElement(By.xpath(obj.getProperty("PayeeAddress"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeAddress", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeCity"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeCity", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeState"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeState", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeZipcode"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeZipcode", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeePhone"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeePhone", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeAccount"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeAccount", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeVeriAccount"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeVeriAccount", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("PayeeAmount"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeAmount", 1));
+           	//Driver.findElement(By.xpath(obj.getProperty("PayeeFromAmount"))).sendKeys(DB.readValue("SELECT * from billpay", "PayeeFromAmount", 1));
+           	Driver.findElement(By.xpath(obj.getProperty("BillpayButton"))).click();
+          
+           	Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+           	
+           	/*Update contact Info
+           	Driver.findElement(By.xpath(obj.getProperty("UpdateContactInfo"))).click();
+          	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+           	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).click();
+          	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).clear();
+          	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+          	Driver.findElement(By.xpath(obj.getProperty("UpdatePhoneNumber"))).sendKeys(FM.getdata("UpdatePhoneNumber"));
+          	Driver.findElement(By.xpath(obj.getProperty("UpdateProfileButton"))).click();*/
+          	
+          	Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
     }
     
    
+   @Test
+    public void LoanRequest() throws IOException {
+	   
+	   FileInputStream objfile = new FileInputStream(System.getProperty("user.dir")+"\\application.properties");	
+	   	obj.load(objfile);
+	   	Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
+	 	
+       	WebElement myDynamicElement = 
+      			(new WebDriverWait(Driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id(obj.getProperty("RequestLoan"))));
+          	/*Request Loan*/
+          	Driver.findElement(By.xpath(obj.getProperty("RequestLoan"))).click();
+          	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+          	Driver.findElement(By.id(obj.getProperty("LoanAmount"))).sendKeys(DB.readValue("SELECT * from loarequest", "DownPaymentAmount", 1));
+          	Driver.findElement(By.id(obj.getProperty("DownPaymentamount"))).sendKeys(DB.readValue("SELECT * from loarequest", "DownPaymentAmount", 1));
+          	Driver.findElement(By.id(obj.getProperty("FromAccountID"))).sendKeys(DB.readValue("SELECT * from loarequest", "FromAccountID", 1));
+          	Driver.findElement(By.xpath(obj.getProperty("LoanApplyButton"))).click();
+          	
+          	test = extent.createTest("Request Loan", "PASSED test case");
+              Assert.assertTrue(true);
+          	
+          	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    }
     
-   /* @Test
-    public void BillPay() throws IOException {
-    	
+    public void logout() throws IOException {
     	FileInputStream objfile = new FileInputStream(System.getProperty("user.dir")+"\\application.properties");	
-    	obj.load(objfile);
-    	
-    	 Driver.manage().timeouts().implicitlyWait(90, TimeUnit.SECONDS);
-    	Driver.findElement(By.xpath(obj.getProperty("BillPay"))).click();
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeName"))).sendKeys(FM.getdata("PayeeName"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeAddress"))).sendKeys(FM.getdata("PayeeAddress"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeCity"))).sendKeys(FM.getdata("PayeeCity"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeState"))).sendKeys(FM.getdata("PayeeState"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeZipcode"))).sendKeys(FM.getdata("PayeeZipcode"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeePhone"))).sendKeys(FM.getdata("PayeePhone"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeAccount"))).sendKeys(FM.getdata("PayeeAccount"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeVeriAccount"))).sendKeys(FM.getdata("PayeeVeriAccount"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeAmount"))).sendKeys(FM.getdata("PayeeAmount"));
-    	Driver.findElement(By.xpath(obj.getProperty("PayeeFromAccount"))).sendKeys(FM.getdata("PayeeFromAccount"));
-    	}
-    	*/
-    	
-    @AfterMethod
-    public void getResult(ITestResult result) {
-        if(result.getStatus() == ITestResult.FAILURE) {
-            test.log(Status.FAIL, MarkupHelper.createLabel(result.getName()+" FAILED ", ExtentColor.RED));
-            test.fail(result.getThrowable());
-        }
-        else if(result.getStatus() == ITestResult.SUCCESS) {
-            test.log(Status.PASS, MarkupHelper.createLabel(result.getName()+" PASSED ", ExtentColor.GREEN));
-        }
-        else {
-            test.log(Status.SKIP, MarkupHelper.createLabel(result.getName()+" SKIPPED ", ExtentColor.ORANGE));
-            test.skip(result.getThrowable());
-        }
-    }
+       	obj.load(objfile);
+          	/*Logout*/
+            Driver.findElement(By.xpath(obj.getProperty("Logout"))).click();
+          	Driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+          	
+           	
+          	test = extent.createTest("Logout", "PASSED test case");
+              Assert.assertTrue(true);
+           	
+          	 Reporter.log("TestNG_ReportsAndLogs -> Registration", true);	
+          	 logger.info("Registration");
+          	
+      }
      
-    @AfterTest
-    public void tearDown() {
-    	//to write or update test information to reporter
-        extent.flush();
-    }
-    
-    
-    
+      	
+      @AfterMethod
+      public void getResult(ITestResult result) {
+          if(result.getStatus() == ITestResult.FAILURE) {
+              test.log(Status.FAIL, MarkupHelper.createLabel(result.getName()+" FAILED ", ExtentColor.RED));
+              test.fail(result.getThrowable());
+          }
+          else if(result.getStatus() == ITestResult.SUCCESS) {
+              test.log(Status.PASS, MarkupHelper.createLabel(result.getName()+" PASSED ", ExtentColor.GREEN));
+          }
+          else {
+              test.log(Status.SKIP, MarkupHelper.createLabel(result.getName()+" SKIPPED ", ExtentColor.ORANGE));
+              test.skip(result.getThrowable());
+          }
+      }
+       
+      @AfterTest
+      public void tearDown() {
+      	//to write or update test information to reporter
+          extent.flush();
+      }
     
     
 }

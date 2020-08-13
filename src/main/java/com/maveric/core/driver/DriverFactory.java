@@ -100,7 +100,7 @@ public class DriverFactory {
         return new EdgeDriver(edgeOptions);
     }
 
-    private WebDriver getChromeDriver() {
+    public WebDriver getChromeDriver() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setHeadless(ConfigProperties.HEADLESS.getBoolean());
         if (OS.contains("nix") || OS.contains("nux")
@@ -120,7 +120,7 @@ public class DriverFactory {
         return new ChromeDriver(chromeOptions);
     }
 
-    private WebDriver getFirefoxDriver() {
+    public static WebDriver getFirefoxDriver() {
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setHeadless(ConfigProperties.HEADLESS.getBoolean());
         firefoxOptions.setLogLevel(FirefoxDriverLogLevel.INFO);
